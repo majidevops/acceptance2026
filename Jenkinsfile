@@ -29,7 +29,11 @@ stage("Acceptance test") {
     }
 }
 }
+post {
+    always {
+        sh "docker stop calculatrice"
+    }
+}
         
 }
-
 
