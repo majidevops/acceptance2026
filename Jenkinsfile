@@ -22,7 +22,14 @@ stage("Deploy to staging ou Déployer en préproduction") {
         sh "docker run -d --rm -p 8769:8080 --name calculatrice localhost:5000/calculatrice"
     }
 }
+stage("Acceptance test") {
+    steps {
+        sleep 60
+        sh "chmod +x acceptance_test.sh && ./acceptance_test.sh"
+    }
+}
 }
         
 }
+
 
