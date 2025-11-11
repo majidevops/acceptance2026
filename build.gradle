@@ -1,0 +1,88 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.7'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
+    id 'checkstyle'
+}
+
+group = 'com.chaffai'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// ✅ Active JUnit 5 + lance JaCoCo après test
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy tasks.jacocoTestReport
+}
+
+// ✅ Version JaCoCo stable
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+// ✅ Rapport XML + HTML demandé par Jenkins
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    // ✅ Exclusions conformes Gradle 8+
+    classDirectories.setFrom(
+        files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/config/**',
+                '**/entity/**',
+                '**/dto/**',
+                '**/exception/**',
+                '**/Application*'
+            ])
+        })
+    )
+}
+
+// ✅ Échec si couverture trop faible
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.50  // 50% global
+            }
+        }
+        rule {
+            element = 'CLASS'
+            includes = ['com.chaffai.*']
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.30   // min 30% par classe
+            }
+        }
+    }
+}
+
+// ✅ Le build échoue si couverture insuf.
+check.dependsOn jacocoTestCoverageVerification
