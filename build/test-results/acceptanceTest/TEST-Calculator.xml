@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Calculator" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-11-16T19:09:27.722Z" hostname="master" time="3.276">
+  <properties/>
+  <testcase name="Add two positive numbers" classname="Calculator" time="3.241"/>
+  <testcase name="Add two negative numbers" classname="Calculator" time="0.018"/>
+  <testcase name="Add positive and negative numbers" classname="Calculator" time="0.017"/>
+  <system-out><![CDATA[
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2025-11-16T14:09:28.774-05:00  INFO 104788 --- [calculatrice] [    Test worker] acceptance.CucumberSpringConfiguration   : Starting CucumberSpringConfiguration using Java 21.0.8 with PID 104788 (started by mj in /home/mj/Desktop/Devops/ateliers/Jenkins/acceptance2026)
+2025-11-16T14:09:28.780-05:00  INFO 104788 --- [calculatrice] [    Test worker] acceptance.CucumberSpringConfiguration   : No active profile set, falling back to 1 default profile: "default"
+2025-11-16T14:09:30.123-05:00  INFO 104788 --- [calculatrice] [    Test worker] acceptance.CucumberSpringConfiguration   : Started CucumberSpringConfiguration in 1.897 seconds (process running for 4.295)
+
+Scenario: Add two positive numbers  # src/test/resources/feature/calculator.feature:6
+  Given I have two numbers: 2 and 8 # acceptance.StepDefinitions.i_have_two_numbers(int,int)
+  When the calculator sums them     # acceptance.StepDefinitions.the_calculator_sums_them()
+  Then I should get 10 as result    # acceptance.StepDefinitions.i_should_get_as_result(int)
+
+Scenario: Add two negative numbers    # src/test/resources/feature/calculator.feature:11
+  Given I have two numbers: -5 and -3 # acceptance.StepDefinitions.i_have_two_numbers(int,int)
+  When the calculator sums them       # acceptance.StepDefinitions.the_calculator_sums_them()
+  Then I should get -8 as result      # acceptance.StepDefinitions.i_should_get_as_result(int)
+
+Scenario: Add positive and negative numbers # src/test/resources/feature/calculator.feature:16
+  Given I have two numbers: 10 and -4       # acceptance.StepDefinitions.i_have_two_numbers(int,int)
+  When the calculator sums them             # acceptance.StepDefinitions.the_calculator_sums_them()
+  Then I should get 6 as result             # acceptance.StepDefinitions.i_should_get_as_result(int)
+]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/home/mj/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.17.8/f09415827a71be7ed621c7bd02550678f28bc81c/byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

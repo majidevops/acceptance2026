@@ -24,8 +24,36 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.cucumber:cucumber-java:7.15.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.15.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.15.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+// ACCEPTANCE TESTS CONFIGURATION
+tasks.register('acceptanceTest', Test) {
+    description = 'Run Cucumber acceptance tests'
+    group = 'Verification'
+    
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    
+    include '**/acceptance/**'
+    include '**/AcceptanceTest.class'
+    
+    // Always run tests
+    outputs.upToDateWhen { false }
+    
+    systemProperties System.getProperties()
+    useJUnit()
+}
+
+// Unit tests exclude acceptance tests
+test {
+    exclude '**/acceptance/**'
+    exclude '**/AcceptanceTest.class'
+}
+
+
 
 // ✅ Active JUnit 5 + lance JaCoCo après test
 tasks.test {
